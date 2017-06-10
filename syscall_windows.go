@@ -42,9 +42,15 @@ func dsRoleGetPrimaryDomainInformation(server string) (info PrimaryDomainInfo, e
 
 	info.MachineRole = pInfo.MachineRole
 	info.Flags = pInfo.Flags
-	info.DomainNameFlat = syscall.UTF16ToString((*[256]uint16)(unsafe.Pointer(pInfo.DomainNameFlat))[:])
-	info.DomainNameDNS = syscall.UTF16ToString((*[256]uint16)(unsafe.Pointer(pInfo.DomainNameDNS))[:])
-	info.DomainForestName = syscall.UTF16ToString((*[256]uint16)(unsafe.Pointer(pInfo.DomainForestName))[:])
+	if pInfo.DomainNameFlat != nil {
+		info.DomainNameFlat = syscall.UTF16ToString((*[256]uint16)(unsafe.Pointer(pInfo.DomainNameFlat))[:])
+	}
+	if pInfo.DomainNameDNS != nil {
+		info.DomainNameDNS = syscall.UTF16ToString((*[256]uint16)(unsafe.Pointer(pInfo.DomainNameDNS))[:])
+	}
+	if pInfo.DomainForestName != nil {
+		info.DomainForestName = syscall.UTF16ToString((*[256]uint16)(unsafe.Pointer(pInfo.DomainForestName))[:])
+	}
 	info.DomainGUID = pInfo.DomainGUID
 
 	return
